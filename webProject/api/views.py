@@ -65,11 +65,19 @@ class GetAirplane(APIView):
 
     def get(self, request):
         try:
-            departure_station = request.query_params.get('departure_station')
-            arrival_station = request.query_params.get('arrival_station')
-            departure_date = request.query_params.get('departure_date')
+            departure_date1 = request.query_params.get('departure_date')
+            print('1')
 
-            queryset = Airplane.objects.filter(departure_station=departure_station, arrival_station=arrival_station, departure_date=departure_date)
+            origin1 = request.query_params.get('origin')
+            print('1')
+
+            destination1 = request.query_params.get('destination')
+            print('1')
+
+
+            queryset = Airplane.objects.filter(destination=destination1, origin=origin1, departure_date=departure_date1)
+            print('1')
+
             serializer = AirplaneSerilizer(queryset, many=True)
             
             if queryset:

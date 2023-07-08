@@ -29,7 +29,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 from django.db import models
 
 class Train(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     train_number = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
     departure_station = models.CharField(max_length=100)
@@ -56,7 +56,7 @@ class Airplane(models.Model):
     available_seats = models.IntegerField()
 
     def __str__(self):
-        return f"{self.airline} ({self.flight_number})"
+        return str(self.id)
 
 class TrainTicket(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -92,4 +92,4 @@ class AirplaneTicket(models.Model):
     ticket_price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
-        return f"Airplane Ticket - {self.passenger_name} ({self.origin} to {self.destination})"
+        return f"Airplane Ticket - {self.passenger_FirstName} ({self.origin} to {self.destination})"

@@ -49,11 +49,16 @@ class AirplaneTicketSerilizer(serializers.ModelSerializer):
     class Meta:
         model = AirplaneTicket
         fields = '__all__'
-    def create(self, validated_data):
-        username = validated_data.pop('user')
-        user = CustomUser.objects.get(email=username)
-        validated_data['user'] = user
-        airplaneid = validated_data.pop('airplane')
-        airplane = Airplane.objects.get(id=airplaneid)
-        validated_data['airplane'] = airplane
-        return super().create(validated_data)
+    # def create(self, validated_data):
+    #     username = validated_data.pop('user')
+    #     user = CustomUser.objects.get(email=username)
+    #     validated_data['user'] = user
+    #     # airplaneid = validated_data.pop('airplane')
+    #     # print(airplaneid , type(airplaneid))
+    #     # print("AirplaneSerilizer(airplane)------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + str(airplaneid))
+    #     # airplane = Airplane.objects.get(id = airplaneid)
+    #     # print("AirplaneSerilizer(airplane)------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+
+    #     # print(AirplaneSerilizer(airplane))
+    #     # validated_data['airplane'] = airplane
+    #     return super().create(validated_data)

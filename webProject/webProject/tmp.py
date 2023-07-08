@@ -4,17 +4,17 @@ import requests
 base_url = 'http://localhost:8000'  # Update with your actual base URL
 
 # Set the endpoint URL
-endpoint = '/api/gettrains/'
+endpoint = '/api/getairplane/'
 
 # Set the query parameters
 params = {
-    'departure_station': 'mashhad',
-    'arrival_station': 'tehran',
-    'departure_date': '2023-07-05',
+    'origin': 'mashhad',
+    'destination': 'karaj',
+    'departure_date': '2023-07-08',
 }
 
 # Send GET request with query parameters
-url = 'http://127.0.0.1:8000/api/gettrain/'
+url = 'http://127.0.0.1:8000/api/getairplane/'
 response = requests.get(url, params=params)
 
 # Check the response status code
