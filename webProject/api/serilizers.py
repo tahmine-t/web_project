@@ -28,14 +28,14 @@ class TrainTicketSerilizer(serializers.ModelSerializer):
     class Meta:
         model = TrainTicket
         fields = '__all__'
-    def create(self, validated_data):
-        username = validated_data.pop('user')
-        user = CustomUser.objects.get(email=username)
-        validated_data['user'] = user
-        trainid = validated_data.pop('train')
-        train = Train.objects.get(id=trainid)
-        validated_data['train'] = train
-        return super().create(validated_data)
+    # def create(self, validated_data):
+    #     username = validated_data.pop('user')
+    #     user = CustomUser.objects.get(email=username)
+    #     validated_data['user'] = user
+    #     trainid = validated_data.pop('train')
+    #     train = Train.objects.get(id=trainid)
+    #     validated_data['train'] = train
+    #     return super().create(validated_data)
 class TrainSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Train
