@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import CustomUser , TrainTicket, Train, Airplane, AirplaneTicket
 from .serilizers import CustomUserSerializer , TrainTicketSerilizer, TrainSerilizer, AirplaneSerilizer, AirplaneTicketSerilizer
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser , AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .authentication import CookieJWTAuthentication
 class UserViewSet(ModelViewSet):
@@ -118,3 +118,72 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             response.set_cookie('access_token', access_token, httponly=True, secure=True , max_age = 300)
 
         return response
+class Register(ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    http_method_names = ['post']
+
+
+class Logout(APIView):
+    def get(self , request):
+        response = Response({'success': 'logged out successfully'})
+        response.delete_cookie('access_token')
+        return(response)
+
+
+class ChangeProfileView(APIView):
+    permission_classes = [CookieJWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]  
+
+
+    def get(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
+
+    # def put(self, request):
+    #     user = request.user
+    #     serializer = CustomUserSerializer(user, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=400)
+    def patch(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+class BuyTrainTicket(APIView):
+    permission_classes = [CookieJWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
+    def post(self , request):
+        data = request.data
+        user = request.user
+        data['user'] = user.id
+        serializer = TrainTicketSerilizer(data = data)
+        if serializer.is_valid():
+            serializer.save(user = user)
+            return(Response({'success': 'ticket bought successfully'}))
+        else:
+            errors = serializer.errors
+            return Response(errors, status=400)
+class BuyAirplaneTicket(APIView):
+    permission_classes = [CookieJWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
+    def post(self , request):
+        data = request.data
+        user = request.user
+        data['user'] = user.id
+        serializer = AirplaneTicketSerilizer(data = data)
+        if serializer.is_valid():
+            serializer.save(user = user)
+            return(Response({'success': 'ticket bought successfully'}))
+        else:
+            return(Response({'error': 'invalid input'}))
+

@@ -26,12 +26,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-from django.db import models
 
 class Train(models.Model):
     id = models.IntegerField(primary_key=True)
     train_number = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
+    duration = models.CharField(max_length=10 , null= True , blank=True)
     departure_station = models.CharField(max_length=100)
     arrival_station = models.CharField(max_length=100)
     departure_date = models.DateField()
@@ -39,7 +39,7 @@ class Train(models.Model):
     arrival_date = models.DateField()
     arrival_time = models.TimeField()
     available_seats = models.IntegerField()
-
+    price = models.DecimalField(max_digits=8, decimal_places=2 , null= True , blank=True)
     def __str__(self):
         return f"{self.id}"
 
@@ -54,6 +54,8 @@ class Airplane(models.Model):
     arrival_date = models.DateField()
     arrival_time = models.TimeField()
     available_seats = models.IntegerField()
+    price = models.DecimalField(max_digits=8, decimal_places=2 , null= True , blank=True)
+    duration = models.CharField(max_length=10 , null= True , blank=True)
 
     def __str__(self):
         return str(self.id)
