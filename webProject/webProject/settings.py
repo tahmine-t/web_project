@@ -55,6 +55,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '500/day',  # Rate limit for anonymous users
         'user': '1000/day',  # Rate limit for authenticated users
+        'user' : '10/minute'
     },
 }
 SIMPLE_JWT = {
@@ -75,7 +76,6 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # Example React app's development server
-    'https://your-react-app.com',  # Example React app's production domain
 ]
 ROOT_URLCONF = 'webProject.urls'
 

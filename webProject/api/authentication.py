@@ -1,37 +1,20 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import get_user_model
-
-
-
     
-
 class CookieJWTAuthentication(JWTAuthentication):
     def authenticate(self, request):
-        print('=================================================================================================5')
-
         token = request.COOKIES.get('access_token')
-
         if token:
-            print('=================================================================================================4')
-
             try:
                 validated_token = self.get_validated_token(token)
                 user = self.get_user(validated_token)
-
                 if user:
-                    print('=================================================================================================3')
-
                     return (user, token)
             except:
-                print('=================================================================================================1')
                 return None
-        print('=================================================================================================6')
-
         return None
 
     def get_user(self, validated_token):
-        print('=================================================================================================2')
-
         User = get_user_model()
         user_id = validated_token['user_id']
         try:
@@ -39,6 +22,7 @@ class CookieJWTAuthentication(JWTAuthentication):
             return user
         except User.DoesNotExist:
             return None
+
     def has_permission(self, request, view):
         # Implement your custom permission logic here
         # For example, check if the user is authenticated or has certain roles/permissions

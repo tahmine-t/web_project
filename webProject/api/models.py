@@ -1,12 +1,12 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
-
 from .managers import CustomUserManager
 
 class Roles(models.IntegerChoices):
     buyer = 1, ('Buyer')
     seller = 2, ('Seller')
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(("email address"), unique=True)
     first_name = models.CharField(("first name"), max_length=30 , null= True , blank=True)
