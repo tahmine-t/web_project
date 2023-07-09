@@ -8,6 +8,7 @@ from .serilizers import CustomUserSerializer , TrainTicketSerilizer, TrainSerili
 from rest_framework.permissions import IsAuthenticated, IsAdminUser , AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .authentication import CookieJWTAuthentication
+from . function import is_valid_email
 class UserViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated , IsAdminUser]
     queryset = CustomUser.objects.all()
@@ -115,7 +116,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         access_token = response.data.get('access')
         if access_token:
             # Set the access token as a secure HTTP-only cookie
-            response.set_cookie('access_token', access_token, httponly=True, secure=True , max_age = 300)
+            response.set_cookie('access_token', access_token, httponly=True, secure=True , max_age = 3600)
 
         return response
 class Register(ModelViewSet):
